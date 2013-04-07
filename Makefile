@@ -1,6 +1,6 @@
 PYTHON ?= python
 
-.PHONY: inplace build test doc lint clean
+.PHONY: inplace build test publish doc publish-doc lint clean
 
 inplace:
 	@echo "Installing package in-place"
@@ -22,9 +22,21 @@ publish:
 	$(PYTHON) setup.py sdist bdist_wininst upload
 	@echo ""
 
-doc: build
+doc:
 	@echo "Building HTML documentation"
 	make -C docs html
+	@echo ""
+
+publish-doc: clean doc
+	@echo "Publishing HTML documentation"
+	git checkout gh-pages
+	cp -r docs/build/html/* .
+	find . -name "*.pyc" | xargs rm -f
+	rm -rf docs
+	git add .
+	git commit
+	git push origin gh-pages
+	git checkout master
 	@echo ""
 
 lint:
