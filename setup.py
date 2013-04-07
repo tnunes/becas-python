@@ -3,11 +3,28 @@
 '''
 becas-python - becas API client for Python
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-'''
 
-# Author: Tiago Nunes <tiago.nunes@ua.pt>
-# Copyright: Copyright 2013, Tiago Nunes, Universidade de Aveiro
-# License: Creative Commons Attribution + Noncommercial (cc-by-nc)
+**becas-python** is the official Python client for the becas API.
+
+**becas** is a biomedical concept annotator available through an HTTP API.
+
+This package allows usage of the becas API from a command-line tool or
+programatically from Python modules.
+
+:copyright: (c) 2013, Tiago Nunes, Universidade de Aveiro
+:license: Creative Commons Attribution-Noncommercial
+
+
+Resources
+^^^^^^^^^
+
+* `Documentation <http://tnunes.github.io/becas-python/>`_
+* `Issue Tracker <http://github.com/tnunes/becas-python/issues>`_
+* `Code <http://github.com/tnunes/becas-python>`_
+* `becas API documentation <http://bioinformatics.ua.pt/becas/api>`_
+* `About becas <http://bioinformatics.ua.pt/becas/about>`_
+
+'''
 
 
 import sys
@@ -18,23 +35,15 @@ if sys.version_info < (2, 7):
     raise NotImplementedError('Sorry, you need Python 2.7 or '
                               'Python 3.x to use `becas-python`.')
 
-try:
-    import requests  # NOQA
-except ImportError:
-    print('`becas-python` requires `requests` to be installed.')
-    sys.exit(1)
-
-import becas
-
 
 setup(name='becas',
-      version=becas.__version__,
+      version='1.0',
       description='becas API client for Python.',
-      long_description=becas.__doc__,
-      author=becas.__author__,
-      author_email=becas.__email__,
-      license=becas.__license__,
-      url=becas.__url__,
+      long_description=__doc__,
+      author='Tiago Nunes',
+      author_email='tiago.nunes@ua.pt',
+      license='CC-BY-NC',
+      url='http://tnunes.github.io/becas-python/',
       install_requires=['requests'],
       py_modules=['becas'],
       scripts=['becas.py'],
