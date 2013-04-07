@@ -1,0 +1,5 @@
+include becas.py
+include setup.py
+include README.rst
+include LICENSE
+include test_becas.py
