@@ -1,0 +1,416 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>becas.py module documentation &mdash; becas-python 1.0 documentation</title>
+    
+    <link rel="stylesheet" href="_static/flasky.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="shortcut icon" href="_static/favicon.ico"/>
+    <link rel="top" title="becas-python 1.0 documentation" href="index.html" />
+    <link rel="prev" title="Command-line interface" href="cli.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+  <link href='http://fonts.googleapis.com/css?family=Play:700' rel='stylesheet' type='text/css'>
+  
+  <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-37642891-6', 'github.io');
+    ga('send', 'pageview');
+  </script>
+  
+
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="cli.html" title="Command-line interface"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">becas-python 1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="becas-py-module-documentation">
+<h1>becas.py module documentation<a class="headerlink" href="#becas-py-module-documentation" title="Permalink to this headline">¶</a></h1>
+<p>This page contains the API documentation for <strong>becas.py</strong>, the single module
+packaged by <strong>becas-python</strong> that allows you to use the becas API
+programatically from your Python modules.</p>
+<p>For instructions on how to use the becas API from a command-line tool, read
+the <a class="reference internal" href="cli.html"><em>Command-line interface</em></a> documentation.</p>
+<p>Comprehensive documentation about the becas API is available at its dedicated
+<a class="reference external" href="http://bioinformatics.ua.pt/becas/api">page</a>.</p>
+<div class="section" id="required-configuration">
+<h2>Required configuration<a class="headerlink" href="#required-configuration" title="Permalink to this headline">¶</a></h2>
+<p>You are required to authenticate in order to use the <a class="reference external" href="http://bioinformatics.ua.pt/becas/api">becas API</a>. This can be
+done through the <tt class="docutils literal"><span class="pre">email</span></tt> and <tt class="docutils literal"><span class="pre">tool</span></tt> parameters, which you should set before
+invoking any of the annotation functions:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">becas</span>
+<span class="n">becas</span><span class="o">.</span><span class="n">email</span> <span class="o">=</span> <span class="s">&#39;you@example.com&#39;</span>  <span class="c"># required</span>
+<span class="n">becas</span><span class="o">.</span><span class="n">tool</span> <span class="o">=</span> <span class="s">&#39;your-tool-name&#39;</span>    <span class="c"># optional, defaults to &#39;becas-python&#39;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="configuration-parameters">
+<h2>Configuration parameters<a class="headerlink" href="#configuration-parameters" title="Permalink to this headline">¶</a></h2>
+<p>You can set these parameters from your modules to configure <strong>becas-python</strong>
+behaviour.</p>
+<dl class="data">
+<dt id="becas.timeout">
+<tt class="descclassname">becas.</tt><tt class="descname">timeout</tt><em class="property"> = 120</em><a class="headerlink" href="#becas.timeout" title="Permalink to this definition">¶</a></dt>
+<dd><p>Seconds to wait before timing out a request</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="becas.secure">
+<tt class="descclassname">becas.</tt><tt class="descname">secure</tt><em class="property"> = False</em><a class="headerlink" href="#becas.secure" title="Permalink to this definition">¶</a></dt>
+<dd><p>Whether to use HTTPS or plain HTTP</p>
+</dd></dl>
+
+</div>
+<div class="section" id="constants">
+<h2>Constants<a class="headerlink" href="#constants" title="Permalink to this headline">¶</a></h2>
+<p>These constants are provided for your reference.</p>
+<dl class="data">
+<dt id="becas.SEMANTIC_GROUPS">
+<tt class="descclassname">becas.</tt><tt class="descname">SEMANTIC_GROUPS</tt><em class="property"> = ('SPEC', 'ANAT', 'DISO', 'PATH', 'CHED', 'ENZY', 'MRNA', 'PRGE', 'COMP', 'FUNC', 'PROC')</em><a class="headerlink" href="#becas.SEMANTIC_GROUPS" title="Permalink to this definition">¶</a></dt>
+<dd><p>Semantic groups usable as keys of a <tt class="docutils literal"><span class="pre">groups</span></tt> <tt class="xref py py-class docutils literal"><span class="pre">dict</span></tt></p>
+</dd></dl>
+
+<dl class="data">
+<dt id="becas.EXPORT_FORMATS">
+<tt class="descclassname">becas.</tt><tt class="descname">EXPORT_FORMATS</tt><em class="property"> = ('json', 'xml', 'a1', 'conll')</em><a class="headerlink" href="#becas.EXPORT_FORMATS" title="Permalink to this definition">¶</a></dt>
+<dd><p>Output formats available for the <tt class="xref py py-func docutils literal"><span class="pre">export_text()</span></tt> function</p>
+</dd></dl>
+
+</div>
+<div class="section" id="functions">
+<h2>Functions<a class="headerlink" href="#functions" title="Permalink to this headline">¶</a></h2>
+<p>The following API client functions are available. Read more about the available
+API methods in the <a class="reference external" href="http://bioinformatics.ua.pt/becas/#api__api_calls">becas API calls reference</a>.</p>
+<div class="section" id="text-annotation">
+<h3>Text annotation<a class="headerlink" href="#text-annotation" title="Permalink to this headline">¶</a></h3>
+<dl class="function">
+<dt id="becas.annotate_text">
+<tt class="descclassname">becas.</tt><tt class="descname">annotate_text</tt><big>(</big><em>text</em>, <em>groups=None</em>, <em>echo=False</em><big>)</big><a class="headerlink" href="#becas.annotate_text" title="Permalink to this definition">¶</a></dt>
+<dd><p>Annotate text with biomedical concepts.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>text</strong> &#8211; text to annotate (<tt class="xref py py-class docutils literal"><span class="pre">str</span></tt> or <tt class="xref py py-class docutils literal"><span class="pre">unicode</span></tt>).</li>
+<li><strong>groups</strong> &#8211; <em>optional</em> <tt class="xref py py-class docutils literal"><span class="pre">dict</span></tt> of concept groups to identity.</li>
+<li><strong>echo</strong> &#8211; <em>optional</em> flag to return <tt class="docutils literal"><span class="pre">text</span></tt> in the response.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><tt class="xref py py-class docutils literal"><span class="pre">dict</span></tt> with annotation results.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Usage:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">becas</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">becas</span><span class="o">.</span><span class="n">email</span> <span class="o">=</span> <span class="s">&#39;you@example.com&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">results</span> <span class="o">=</span> <span class="n">becas</span><span class="o">.</span><span class="n">annotate_text</span><span class="p">(</span><span class="s">&#39;BRCA1 is a human caretaker gene.&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="becas.export_text">
+<tt class="descclassname">becas.</tt><tt class="descname">export_text</tt><big>(</big><em>text</em>, <em>format</em>, <em>groups=None</em><big>)</big><a class="headerlink" href="#becas.export_text" title="Permalink to this definition">¶</a></dt>
+<dd><p>Export text annotated with biomedical concepts in JSON, XML, A1 or
+CONLL.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>text</strong> &#8211; text to annotate (<tt class="xref py py-class docutils literal"><span class="pre">str</span></tt> or <tt class="xref py py-class docutils literal"><span class="pre">unicode</span></tt>).</li>
+<li><strong>format</strong> &#8211; output format (one of &#8216;json&#8217;, &#8216;xml&#8217;, &#8216;a1&#8217; or &#8216;conll&#8217;).</li>
+<li><strong>groups</strong> &#8211; <em>optional</em> <tt class="xref py py-class docutils literal"><span class="pre">dict</span></tt> of concept groups to identity.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><tt class="xref py py-class docutils literal"><span class="pre">unicode</span></tt> string with annotation results.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Usage:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">becas</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">becas</span><span class="o">.</span><span class="n">email</span> <span class="o">=</span> <span class="s">&#39;you@example.com&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">text</span> <span class="o">=</span> <span class="s">&#39;BRCA1 is a human caretaker gene.&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">json_results</span> <span class="o">=</span> <span class="n">becas</span><span class="o">.</span><span class="n">export_text</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="s">&#39;json&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">iexml_results</span> <span class="o">=</span> <span class="n">becas</span><span class="o">.</span><span class="n">export_text</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="s">&#39;xml&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">a1_results</span> <span class="o">=</span> <span class="n">becas</span><span class="o">.</span><span class="n">export_text</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="s">&#39;a1&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">conll_results</span> <span class="o">=</span> <span class="n">becas</span><span class="o">.</span><span class="n">export_text</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="s">&#39;conll&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</div>
+<div class="section" id="abstract-annotation">
+<h3>Abstract annotation<a class="headerlink" href="#abstract-annotation" title="Permalink to this headline">¶</a></h3>
+<dl class="function">
+<dt id="becas.annotate_publication">
+<tt class="descclassname">becas.</tt><tt class="descname">annotate_publication</tt><big>(</big><em>pmid</em>, <em>groups=None</em><big>)</big><a class="headerlink" href="#becas.annotate_publication" title="Permalink to this definition">¶</a></dt>
+<dd><p>Annotate PubMed publication with biomedical concepts.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>pmid</strong> &#8211; PMID of publication to annotate.</li>
+<li><strong>groups</strong> &#8211; <em>optional</em> <tt class="xref py py-class docutils literal"><span class="pre">dict</span></tt> of concept groups to identity.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><tt class="xref py py-class docutils literal"><span class="pre">dict</span></tt> with annotation results.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Usage:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">becas</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">becas</span><span class="o">.</span><span class="n">email</span> <span class="o">=</span> <span class="s">&#39;you@example.com&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">results</span> <span class="o">=</span> <span class="n">becas</span><span class="o">.</span><span class="n">annotate_publication</span><span class="p">(</span><span class="mi">23225384</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="becas.export_publication">
+<tt class="descclassname">becas.</tt><tt class="descname">export_publication</tt><big>(</big><em>pmid</em>, <em>groups=None</em><big>)</big><a class="headerlink" href="#becas.export_publication" title="Permalink to this definition">¶</a></dt>
+<dd><p>Export PubMed publication as MEDLINE IeXML annotated with
+biomedical concepts.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>pmid</strong> &#8211; PMID of publication to annotate.</li>
+<li><strong>groups</strong> &#8211; <em>optional</em> <tt class="xref py py-class docutils literal"><span class="pre">dict</span></tt> of concept groups to identity.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><tt class="xref py py-class docutils literal"><span class="pre">unicode</span></tt> string with IeXML annotation results.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Usage:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">becas</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">becas</span><span class="o">.</span><span class="n">email</span> <span class="o">=</span> <span class="s">&#39;you@example.com&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">results</span> <span class="o">=</span> <span class="n">becas</span><span class="o">.</span><span class="n">export_publication</span><span class="p">(</span><span class="mi">23225384</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</div>
+</div>
+<div class="section" id="exceptions">
+<h2>Exceptions<a class="headerlink" href="#exceptions" title="Permalink to this headline">¶</a></h2>
+<p>If something goes wrong, one of these exceptions will be raised.</p>
+<dl class="exception">
+<dt id="becas.BecasException">
+<em class="property">exception </em><tt class="descclassname">becas.</tt><tt class="descname">BecasException</tt><a class="headerlink" href="#becas.BecasException" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">exceptions.RuntimeError</span></tt></p>
+<p>There was an ambiguous exception that occurred while handling your
+request.</p>
+</dd></dl>
+
+<dl class="exception">
+<dt id="becas.AuthenticationRequired">
+<em class="property">exception </em><tt class="descclassname">becas.</tt><tt class="descname">AuthenticationRequired</tt><a class="headerlink" href="#becas.AuthenticationRequired" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#becas.BecasException" title="becas.BecasException"><tt class="xref py py-class docutils literal"><span class="pre">becas.BecasException</span></tt></a></p>
+<p>You need to authenticate your requests with your email and optionally a
+tool name.</p>
+<p>As an example, if your email address is <a class="reference external" href="mailto:you&#37;&#52;&#48;example&#46;com">you<span>&#64;</span>example<span>&#46;</span>com</a>, you can specify it
+as follows:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">becas</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">becas</span><span class="o">.</span><span class="n">email</span> <span class="o">=</span> <span class="s">&#39;you@example.com&#39;</span>
+</pre></div>
+</div>
+<p>In case of excessive usage of the becas API, UA.PT Bioinformatics will
+attempt to contact a user at the email address provided before blocking
+access to the services.</p>
+</dd></dl>
+
+<dl class="exception">
+<dt id="becas.InvalidGroups">
+<em class="property">exception </em><tt class="descclassname">becas.</tt><tt class="descname">InvalidGroups</tt><a class="headerlink" href="#becas.InvalidGroups" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#becas.BecasException" title="becas.BecasException"><tt class="xref py py-class docutils literal"><span class="pre">becas.BecasException</span></tt></a>, <tt class="xref py py-class docutils literal"><span class="pre">exceptions.ValueError</span></tt></p>
+<p>You provided an invalid groups dictionary.</p>
+</dd></dl>
+
+<dl class="exception">
+<dt id="becas.InvalidFormat">
+<em class="property">exception </em><tt class="descclassname">becas.</tt><tt class="descname">InvalidFormat</tt><a class="headerlink" href="#becas.InvalidFormat" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#becas.BecasException" title="becas.BecasException"><tt class="xref py py-class docutils literal"><span class="pre">becas.BecasException</span></tt></a>, <tt class="xref py py-class docutils literal"><span class="pre">exceptions.ValueError</span></tt></p>
+<p>You provided an invalid export format.</p>
+</dd></dl>
+
+<dl class="exception">
+<dt id="becas.TooMuchText">
+<em class="property">exception </em><tt class="descclassname">becas.</tt><tt class="descname">TooMuchText</tt><a class="headerlink" href="#becas.TooMuchText" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#becas.BecasException" title="becas.BecasException"><tt class="xref py py-class docutils literal"><span class="pre">becas.BecasException</span></tt></a>, <tt class="xref py py-class docutils literal"><span class="pre">exceptions.ValueError</span></tt></p>
+<p>You provided too much text to annotate. Try again with less text.</p>
+</dd></dl>
+
+<dl class="exception">
+<dt id="becas.TooManyRequests">
+<em class="property">exception </em><tt class="descclassname">becas.</tt><tt class="descname">TooManyRequests</tt><big>(</big><em>wait</em><big>)</big><a class="headerlink" href="#becas.TooManyRequests" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#becas.BecasException" title="becas.BecasException"><tt class="xref py py-class docutils literal"><span class="pre">becas.BecasException</span></tt></a></p>
+<p>You performed too many requests in a short amount of time. Wait <tt class="docutils literal"><span class="pre">wait</span></tt>
+seconds before trying again.</p>
+</dd></dl>
+
+<dl class="exception">
+<dt id="becas.PublicationNotFound">
+<em class="property">exception </em><tt class="descclassname">becas.</tt><tt class="descname">PublicationNotFound</tt><a class="headerlink" href="#becas.PublicationNotFound" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#becas.BecasException" title="becas.BecasException"><tt class="xref py py-class docutils literal"><span class="pre">becas.BecasException</span></tt></a>, <tt class="xref py py-class docutils literal"><span class="pre">exceptions.ValueError</span></tt></p>
+<p>The publication you requested was not found in PubMed.</p>
+</dd></dl>
+
+<dl class="exception">
+<dt id="becas.ServiceUnavailable">
+<em class="property">exception </em><tt class="descclassname">becas.</tt><tt class="descname">ServiceUnavailable</tt><a class="headerlink" href="#becas.ServiceUnavailable" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#becas.BecasException" title="becas.BecasException"><tt class="xref py py-class docutils literal"><span class="pre">becas.BecasException</span></tt></a></p>
+<p>The annotation service is currently unavailable.</p>
+</dd></dl>
+
+<dl class="exception">
+<dt id="becas.ConnectionError">
+<em class="property">exception </em><tt class="descclassname">becas.</tt><tt class="descname">ConnectionError</tt><a class="headerlink" href="#becas.ConnectionError" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#becas.BecasException" title="becas.BecasException"><tt class="xref py py-class docutils literal"><span class="pre">becas.BecasException</span></tt></a></p>
+<p>A Connection error occurred.</p>
+</dd></dl>
+
+<dl class="exception">
+<dt id="becas.SSLError">
+<em class="property">exception </em><tt class="descclassname">becas.</tt><tt class="descname">SSLError</tt><a class="headerlink" href="#becas.SSLError" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#becas.ConnectionError" title="becas.ConnectionError"><tt class="xref py py-class docutils literal"><span class="pre">becas.ConnectionError</span></tt></a></p>
+<p>An SSL error occurred.</p>
+</dd></dl>
+
+<dl class="exception">
+<dt id="becas.Timeout">
+<em class="property">exception </em><tt class="descclassname">becas.</tt><tt class="descname">Timeout</tt><a class="headerlink" href="#becas.Timeout" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#becas.BecasException" title="becas.BecasException"><tt class="xref py py-class docutils literal"><span class="pre">becas.BecasException</span></tt></a></p>
+<p>The request timed out.</p>
+</dd></dl>
+
+<hr class="docutils" />
+<p>This documentation was automatically generated from the <a class="reference external" href="http://github.com/tnunes/becas-python/blob/master/becas.py">source code</a>
+using <a class="reference external" href="http://sphinx-doc.org/">sphinx</a>.</p>
+<p><strong>becas.py</strong> is a rather small module. You can read the annotated source at
+<a class="reference external" href="http://github.com/tnunes/becas-python/blob/master/becas.py">GitHub</a>.</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper"><h1 class="becas">becas-python</h1>
+<p>
+	becas-python is a command-line tool and Python module
+	for programmatic access to the 
+	<a href="http://bioinformatics.ua.pt/becas/">becas</a> API.
+</p>
+
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">becas.py module documentation</a><ul>
+<li><a class="reference internal" href="#required-configuration">Required configuration</a></li>
+<li><a class="reference internal" href="#configuration-parameters">Configuration parameters</a></li>
+<li><a class="reference internal" href="#constants">Constants</a></li>
+<li><a class="reference internal" href="#functions">Functions</a><ul>
+<li><a class="reference internal" href="#text-annotation">Text annotation</a></li>
+<li><a class="reference internal" href="#abstract-annotation">Abstract annotation</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#exceptions">Exceptions</a></li>
+</ul>
+</li>
+</ul>
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="cli.html" title="previous chapter">Command-line interface</a></li>
+  </ul></li>
+</ul><h3>Useful Links</h3>
+<ul>
+  <li><a href="http://pypi.python.org/pypi/becas">becas-python @ PyPI</a></li>
+  <li><a href="http://github.com/tnunes/becas-python">becas-python @ GitHub</a></li>
+  <li><a href="http://github.com/tnunes/becas-python/issues">Issue Tracker</a></li>
+  <li><a href="http://bioinformatics.ua.pt/becas/api">becas API docs</a></li>
+  <li><a href="http://bioinformatics.ua.pt/becas/about">about becas</a></li>
+</ul>
+
+<h3>Feedback</h3>
+<p>
+  Feedback is greatly appreciated. If you have any questions, comments,
+  or need help using becas-python, <a href="mailto:tiago.nunes@ua.pt?subject=becas-python">
+  send me an email</a>.
+</p>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy; Copyright 2013, Tiago Nunes.
+    </div>
+    <a href="http://github.com/tnunes/becas-python" class="github">
+        <img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_gray_6d6d6d.png" alt="Fork me on GitHub" />
+    </a>
+  </body>
+</html>

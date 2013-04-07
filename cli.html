@@ -1,0 +1,371 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Command-line interface &mdash; becas-python 1.0 documentation</title>
+    
+    <link rel="stylesheet" href="_static/flasky.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="shortcut icon" href="_static/favicon.ico"/>
+    <link rel="top" title="becas-python 1.0 documentation" href="index.html" />
+    <link rel="next" title="becas.py module documentation" href="becas.py.html" />
+    <link rel="prev" title="becas-python: becas API client" href="index.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+  <link href='http://fonts.googleapis.com/css?family=Play:700' rel='stylesheet' type='text/css'>
+  
+  <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-37642891-6', 'github.io');
+    ga('send', 'pageview');
+  </script>
+  
+
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="becas.py.html" title="becas.py module documentation"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="becas-python: becas API client"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">becas-python 1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="command-line-interface">
+<h1>Command-line interface<a class="headerlink" href="#command-line-interface" title="Permalink to this headline">¶</a></h1>
+<p>This page contains the command-line interface documentation of <strong>becas-python</strong>
+that allows you to use the becas API from a command-line tool.</p>
+<p>For instructions on how to use the becas API programatically from your Python
+modules, read the <a class="reference internal" href="becas.py.html"><em>becas.py module documentation</em></a>.</p>
+<p>Comprehensive documentation about the becas API is available at its dedicated
+<a class="reference external" href="http://bioinformatics.ua.pt/becas/api">page</a>.</p>
+<div class="section" id="available-commands">
+<h2>Available commands<a class="headerlink" href="#available-commands" title="Permalink to this headline">¶</a></h2>
+<p>Assuming you have already installed <strong>becas-python</strong>, running <tt class="docutils literal"><span class="pre">becas.py</span> <span class="pre">-h</span></tt>
+should print the following help message:</p>
+<div class="highlight-python"><pre>$ becas.py -h
+usage: becas.py [-h]
+
+                {annotate-text,export-text,annotate-publication,export-publication}
+                ...
+
+Annotate text or PubMed publications using the becas API.
+
+positional arguments:
+  {annotate-text,export-text,annotate-publication,export-publication}
+    annotate-text       annotate text as JSON with concept metadata
+    export-text         export text in a chosen format
+    annotate-publication
+                        annotate PubMed publication as JSON with concept
+                        metadata
+    export-publication  export PubMed publication in MEDLINE IeXML
+
+optional arguments:
+  -h, --help            show this help message and exit</pre>
+</div>
+<p>As you can see, all methods exposed by the API are available as commands:</p>
+<ul class="simple">
+<li>annotate-text</li>
+<li>export-text</li>
+<li>annotate-publication</li>
+<li>export-publication</li>
+</ul>
+</div>
+<div class="section" id="authentication-parameters">
+<h2>Authentication parameters<a class="headerlink" href="#authentication-parameters" title="Permalink to this headline">¶</a></h2>
+<p>You are required to authenticate in order to use the <a class="reference external" href="http://bioinformatics.ua.pt/becas/api">becas API</a>. This can be
+done through the <tt class="docutils literal"><span class="pre">--email</span></tt> and <tt class="docutils literal"><span class="pre">--tool</span></tt> parameters. Only the <cite>email</cite>
+parameter is mandatory. If you ommit the <cite>tool</cite> parameter, it defaults to
+becas-python.</p>
+</div>
+<div class="section" id="optional-parameters">
+<h2>Optional parameters<a class="headerlink" href="#optional-parameters" title="Permalink to this headline">¶</a></h2>
+<p>All commands accept the following optional arguments:</p>
+<div class="highlight-python"><pre>optional arguments:
+  -h, --help            show this help message and exit
+  -g GROUPS, --groups GROUPS
+                        semantic groups to use for annotation as a comma
+                        separated list (e.g. PRGE,DISO,ANAT). Available
+                        groups: (SPEC, ANAT, DISO, PATH, CHED, ENZY, MRNA,
+                        PRGE, COMP, FUNC, PROC)
+  -o FILE, --output-file FILE
+                        file to save annotation results to
+  --secure              access the service securely through HTTPS
+  --timeout TIMEOUT     seconds to wait before timing out a request</pre>
+</div>
+<p>If you ommit the <tt class="docutils literal"><span class="pre">--groups</span></tt> parameter, all semantic groups will be
+used for annotation.</p>
+<p>By default, annotation results are printed to STDOUT. You can use the
+<tt class="docutils literal"><span class="pre">--output-file</span></tt> parameter to save results to a file.</p>
+</div>
+<div class="section" id="using-the-tool">
+<h2>Using the tool<a class="headerlink" href="#using-the-tool" title="Permalink to this headline">¶</a></h2>
+<p>You can use the command-line tool to automatically annotate text and PubMed
+publications with biomedical concepts.</p>
+<div class="section" id="text-annotation">
+<h3>Text annotation<a class="headerlink" href="#text-annotation" title="Permalink to this headline">¶</a></h3>
+<p>The <strong>text annotation endpoint</strong> of the API is available through the
+<tt class="docutils literal"><span class="pre">annotate-text</span></tt> command:</p>
+<div class="highlight-python"><pre>$ becas.py annotate-text -h
+usage: becas.py annotate-text [-h] --email EMAIL [--tool TOOL]
+                              (-f FILE | -t TEXT | -i) [-g GROUPS] [-o FILE]
+                              [--secure] [--timeout TIMEOUT]
+
+Annotate text with biomedical concepts using the becas API.
+
+optional arguments:
+  -h, --help            show this help message and exit
+  -g GROUPS, --groups GROUPS
+                        semantic groups to use for annotation as a comma
+                        separated list (e.g. PRGE,DISO,ANAT). Available
+                        groups: (SPEC, ANAT, DISO, PATH, CHED, ENZY, MRNA,
+                        PRGE, COMP, FUNC, PROC)
+  -o FILE, --output-file FILE
+                        file to save annotation results to
+  --secure              access the service securely through HTTPS
+  --timeout TIMEOUT     seconds to wait before timing out a request
+
+client authentication:
+  --email EMAIL         Email address to use in API authentication
+  --tool TOOL           Tool name to use in API authentication (default:
+                        becas-python)
+
+input selection:
+  -f FILE, --file FILE  text file to annotate
+  -t TEXT, --text TEXT  plain text to annotate
+  -i, --stdin           read text from STDIN</pre>
+</div>
+<p>Input text can be piped in through STDIN, specified directly in the
+command-line or read from a text file.</p>
+<p>For example, to annotate a text file with biomedical concepts and save
+JSON results to another file you could do:</p>
+<div class="highlight-python"><pre>$ becas.py annotate-text --email "you@example.com" \
+                         -f my_text_file.txt -o my_annotations.json</pre>
+</div>
+<p>The <strong>text export endpoint</strong> of the API, which allows you to export results
+in JSON, XML, A1 or CoNLL, is available through the <tt class="docutils literal"><span class="pre">export-text</span></tt> command:</p>
+<div class="highlight-python"><pre>$ becas.py export-text -h
+usage: becas.py export-text [-h] --email EMAIL [--tool TOOL]
+                            (-f FILE | -t TEXT | -i) --format
+                            {json,xml,a1,conll} [-g GROUPS] [-o FILE]
+                            [--secure] [--timeout TIMEOUT]
+
+Export text annotated with biomedical concepts in a chosen format using the
+becas API.
+
+optional arguments:
+  -h, --help            show this help message and exit
+  -g GROUPS, --groups GROUPS
+                        semantic groups to use for annotation as a comma
+                        separated list (e.g. PRGE,DISO,ANAT). Available
+                        groups: (SPEC, ANAT, DISO, PATH, CHED, ENZY, MRNA,
+                        PRGE, COMP, FUNC, PROC)
+  -o FILE, --output-file FILE
+                        file to save annotation results to
+  --secure              access the service securely through HTTPS
+  --timeout TIMEOUT     seconds to wait before timing out a request
+
+client authentication:
+  --email EMAIL         Email address to use in API authentication
+  --tool TOOL           Tool name to use in API authentication (default:
+                        becas-python)
+
+input selection:
+  -f FILE, --file FILE  text file to annotate
+  -t TEXT, --text TEXT  plain text to annotate
+  -i, --stdin           read text from STDIN
+
+output selection:
+  --format {json,xml,a1,conll}
+                        output format</pre>
+</div>
+<p>You can, for example, easily export standoff annotation in A1 format using
+a command similar to:</p>
+<div class="highlight-python"><pre>$ becas.py export-text --email "you@example.com" \
+                       --format a1 -f my_text_file.txt -o my_annotations.a1</pre>
+</div>
+</div>
+<div class="section" id="abstract-annotation">
+<h3>Abstract annotation<a class="headerlink" href="#abstract-annotation" title="Permalink to this headline">¶</a></h3>
+<p>The <strong>abstract annotation endpoint</strong> of the API is exposed by the
+<tt class="docutils literal"><span class="pre">annotate-publication</span></tt> command:</p>
+<div class="highlight-python"><pre>$ becas.py annotate-publication -h
+usage: becas.py annotate-publication [-h] --email EMAIL [--tool TOOL] -p PMID
+                                     [-g GROUPS] [-o FILE] [--secure]
+                                     [--timeout TIMEOUT]
+
+Annotate PubMed publications with biomedical concepts using the becas API.
+
+optional arguments:
+  -h, --help            show this help message and exit
+  -g GROUPS, --groups GROUPS
+                        semantic groups to use for annotation as a comma
+                        separated list (e.g. PRGE,DISO,ANAT). Available
+                        groups: (SPEC, ANAT, DISO, PATH, CHED, ENZY, MRNA,
+                        PRGE, COMP, FUNC, PROC)
+  -o FILE, --output-file FILE
+                        file to save annotation results to
+  --secure              access the service securely through HTTPS
+  --timeout TIMEOUT     seconds to wait before timing out a request
+
+client authentication:
+  --email EMAIL         Email address to use in API authentication
+  --tool TOOL           Tool name to use in API authentication (default:
+                        becas-python)
+
+input selection:
+  -p PMID, --pmid PMID  PMID of publication to annotate</pre>
+</div>
+<p>To annotate a publication and save results as JSON you would do:</p>
+<div class="highlight-python"><pre>$ becas.py annotate-publication --email "you@example.com" \
+                                --pmid 23225384 -o 23225384.json</pre>
+</div>
+<p>The <strong>abstract export endpoint</strong> of the API, allowing export of annotated
+publications in MEDLINE IeXML format, is reachable through the
+<tt class="docutils literal"><span class="pre">export-publication</span></tt> command:</p>
+<div class="highlight-python"><pre>$ becas.py export-publication -h
+usage: becas.py export-publication [-h] --email EMAIL [--tool TOOL] -p PMID
+                                   [-g GROUPS] [-o FILE] [--secure]
+                                   [--timeout TIMEOUT]
+
+Export PubMed publications annotated with biomedical concepts using the becas
+API.
+
+optional arguments:
+  -h, --help            show this help message and exit
+  -g GROUPS, --groups GROUPS
+                        semantic groups to use for annotation as a comma
+                        separated list (e.g. PRGE,DISO,ANAT). Available
+                        groups: (SPEC, ANAT, DISO, PATH, CHED, ENZY, MRNA,
+                        PRGE, COMP, FUNC, PROC)
+  -o FILE, --output-file FILE
+                        file to save annotation results to
+  --secure              access the service securely through HTTPS
+  --timeout TIMEOUT     seconds to wait before timing out a request
+
+client authentication:
+  --email EMAIL         Email address to use in API authentication
+  --tool TOOL           Tool name to use in API authentication (default:
+                        becas-python)
+
+input selection:
+  -p PMID, --pmid PMID  PMID of publication to annotate</pre>
+</div>
+<p>You can export an annotated document using a command like:</p>
+<div class="highlight-python"><pre>$ becas.py export-publication --email "you@example.com" \
+                              --pmid 23225384 -o 23225384.xml</pre>
+</div>
+<hr class="docutils" />
+<p>If you need to use becas functionality programatically from Python code,
+take a look at the <a class="reference internal" href="becas.py.html"><em>becas.py module documentation</em></a>.</p>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper"><h1 class="becas">becas-python</h1>
+<p>
+	becas-python is a command-line tool and Python module
+	for programmatic access to the 
+	<a href="http://bioinformatics.ua.pt/becas/">becas</a> API.
+</p>
+
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Command-line interface</a><ul>
+<li><a class="reference internal" href="#available-commands">Available commands</a></li>
+<li><a class="reference internal" href="#authentication-parameters">Authentication parameters</a></li>
+<li><a class="reference internal" href="#optional-parameters">Optional parameters</a></li>
+<li><a class="reference internal" href="#using-the-tool">Using the tool</a><ul>
+<li><a class="reference internal" href="#text-annotation">Text annotation</a></li>
+<li><a class="reference internal" href="#abstract-annotation">Abstract annotation</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="index.html" title="previous chapter">becas-python: becas API client</a></li>
+      <li>Next: <a href="becas.py.html" title="next chapter">becas.py module documentation</a></li>
+  </ul></li>
+</ul><h3>Useful Links</h3>
+<ul>
+  <li><a href="http://pypi.python.org/pypi/becas">becas-python @ PyPI</a></li>
+  <li><a href="http://github.com/tnunes/becas-python">becas-python @ GitHub</a></li>
+  <li><a href="http://github.com/tnunes/becas-python/issues">Issue Tracker</a></li>
+  <li><a href="http://bioinformatics.ua.pt/becas/api">becas API docs</a></li>
+  <li><a href="http://bioinformatics.ua.pt/becas/about">about becas</a></li>
+</ul>
+
+<h3>Feedback</h3>
+<p>
+  Feedback is greatly appreciated. If you have any questions, comments,
+  or need help using becas-python, <a href="mailto:tiago.nunes@ua.pt?subject=becas-python">
+  send me an email</a>.
+</p>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy; Copyright 2013, Tiago Nunes.
+    </div>
+    <a href="http://github.com/tnunes/becas-python" class="github">
+        <img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_gray_6d6d6d.png" alt="Fork me on GitHub" />
+    </a>
+  </body>
+</html>
