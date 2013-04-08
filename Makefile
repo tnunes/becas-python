@@ -17,7 +17,7 @@ test: build
 	$(PYTHON) test_becas.py
 	@echo ""
 
-publish:
+publish: test
 	@echo "Publishing becas-python to PyPI"
 	$(PYTHON) setup.py sdist bdist_wininst upload
 	@echo ""
