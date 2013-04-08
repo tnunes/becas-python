@@ -542,8 +542,12 @@ def handle_annotation_results(results, output_file):
 
     results = json.dumps(results) if isinstance(results, dict) else results
     if output_file:
-        output_file.write(results.encode('utf-8'))
-        output_file.close()
+        try:
+            output_file.write(results.encode('utf-8'))
+        except IOError as e:
+            abort('IOError writing to output file: %s' % e)
+        finally:
+            output_file.close()
     else:
         sys.stdout.write(results)
         sys.stdout.flush()
