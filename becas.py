@@ -610,8 +610,7 @@ def cli_export_publication(args):
 def main():
     '''Command-line interface entry point.'''
 
-    parser = argparser()
-    args = parser.parse_args()
+    args = argparser().parse_args()
     args.func(args)
 
 
