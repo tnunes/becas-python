@@ -27,7 +27,7 @@ Resources
 '''
 
 __title__ = 'becas'
-__version__ = '1.0.1'
+__version__ = '1.0.1-dev'
 __author__ = 'Tiago Nunes'
 __license__ = 'CC-BY-NC'
 __copyright__ = 'Copyright 2013, Tiago Nunes, Universidade de Aveiro'
