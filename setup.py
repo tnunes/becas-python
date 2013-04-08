@@ -36,8 +36,22 @@ if sys.version_info < (2, 7):
                               'Python 3.x to use `becas-python`.')
 
 
+# We cannot simply import becas; becas.__version__ because requests might
+# not be installed and we would fail with an ImportError
+def get_version(filepath='becas.py'):
+    import re
+    VERSION_REGEX = re.compile(r"^__version__ = '(\d+\.\d+\.\d+(-dev)?)'$")
+
+    with open(filepath, 'rt') as infile:
+        for line in infile:
+            match = VERSION_REGEX.match(line)
+            if match:
+                return match.group(1)
+    raise ValueError("Could not find version in file %s" % filepath)
+
+
 setup(name='becas',
-      version='1.0.1',
+      version=get_version(),
       description='becas API client for Python.',
       long_description=__doc__,
       author='Tiago Nunes',
