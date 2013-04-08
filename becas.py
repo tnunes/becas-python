@@ -27,7 +27,7 @@ Resources
 '''
 
 __title__ = 'becas'
-__version__ = '1.0'
+__version__ = '1.0.1'
 __author__ = 'Tiago Nunes'
 __license__ = 'CC-BY-NC'
 __copyright__ = 'Copyright 2013, Tiago Nunes, Universidade de Aveiro'
@@ -558,6 +558,9 @@ def cli_annotate_text(args):
         results = annotate_text(text, groups)
     except ValueError as e:
         argparser().error(e)
+    except BecasException as e:
+        sys.stderr.write('%s: %s\n' % (type(e).__name__, e))
+        sys.exit(1)
     handle_annotation_results(results, args.output_file)
 
 
@@ -570,6 +573,9 @@ def cli_export_text(args):
         results = export_text(text, args.format, groups)
     except ValueError as e:
         argparser().error(e)
+    except BecasException as e:
+        sys.stderr.write('%s: %s\n' % (type(e).__name__, e))
+        sys.exit(1)
     handle_annotation_results(results, args.output_file)
 
 
@@ -581,6 +587,9 @@ def cli_annotate_publication(args):
         results = annotate_publication(args.pmid, groups)
     except ValueError as e:
         argparser().error(e)
+    except BecasException as e:
+        sys.stderr.write('%s: %s\n' % (type(e).__name__, e))
+        sys.exit(1)
     handle_annotation_results(results, args.output_file)
 
 
@@ -592,6 +601,9 @@ def cli_export_publication(args):
         results = export_publication(args.pmid, groups)
     except ValueError as e:
         argparser().error(e)
+    except BecasException as e:
+        sys.stderr.write('%s: %s\n' % (type(e).__name__, e))
+        sys.exit(1)
     handle_annotation_results(results, args.output_file)
 
 

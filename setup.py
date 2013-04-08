@@ -37,7 +37,7 @@ if sys.version_info < (2, 7):
 
 
 setup(name='becas',
-      version='1.0',
+      version='1.0.1',
       description='becas API client for Python.',
       long_description=__doc__,
       author='Tiago Nunes',
