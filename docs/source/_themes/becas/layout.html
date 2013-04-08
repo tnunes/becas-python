@@ -6,6 +6,9 @@
   {% endif %}
   <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
   <link href='http://fonts.googleapis.com/css?family=Play:700' rel='stylesheet' type='text/css'>
+  {% if theme_gwmt_id %}
+  <meta name="google-site-verification" content="{{ theme_gwmt_id }}" />
+  {% endif %}
   {% if theme_ga_id %}
   <script>
     (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
