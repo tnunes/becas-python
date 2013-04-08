@@ -559,8 +559,7 @@ def cli_annotate_text(args):
     except ValueError as e:
         argparser().error(e)
     except BecasException as e:
-        sys.stderr.write('%s: %s\n' % (type(e).__name__, e))
-        sys.exit(1)
+        abort(e)
     handle_annotation_results(results, args.output_file)
 
 
@@ -574,8 +573,7 @@ def cli_export_text(args):
     except ValueError as e:
         argparser().error(e)
     except BecasException as e:
-        sys.stderr.write('%s: %s\n' % (type(e).__name__, e))
-        sys.exit(1)
+        abort(e)
     handle_annotation_results(results, args.output_file)
 
 
@@ -588,8 +586,7 @@ def cli_annotate_publication(args):
     except ValueError as e:
         argparser().error(e)
     except BecasException as e:
-        sys.stderr.write('%s: %s\n' % (type(e).__name__, e))
-        sys.exit(1)
+        abort(e)
     handle_annotation_results(results, args.output_file)
 
 
@@ -602,8 +599,7 @@ def cli_export_publication(args):
     except ValueError as e:
         argparser().error(e)
     except BecasException as e:
-        sys.stderr.write('%s: %s\n' % (type(e).__name__, e))
-        sys.exit(1)
+        abort(e)
     handle_annotation_results(results, args.output_file)
 
 
@@ -614,8 +610,17 @@ def main():
     args.func(args)
 
 
+def abort(msg, ret=1):
+    '''Print message to stderr and abort program execution.'''
+
+    if isinstance(msg, Exception):
+        msg = '%s: %s' % (type(msg).__name__, msg)
+    sys.stderr.write(msg + '\n')
+    sys.exit(ret)
+
+
 if __name__ == '__main__':
     try:
         main()
     except KeyboardInterrupt:
-        sys.stderr.write('Manually interrupted by ^C. Aborting.\n')
+        abort('Manually interrupted by ^C. Aborting.')
