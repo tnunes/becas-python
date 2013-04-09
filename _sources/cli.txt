@@ -4,7 +4,7 @@ Command-line interface
 This page contains the command-line interface documentation of **becas-python**
 that allows you to use the becas API from a command-line tool.
 
-For instructions on how to use the becas API programatically from your Python
+For instructions on how to use the becas API programmatically from your Python
 modules, read the :doc:`becas.py`.
 
 Comprehensive documentation about the becas API is available at its dedicated
@@ -255,7 +255,7 @@ You can export an annotated document using a command like::
 
 ----------
 
-If you need to use becas functionality programatically from Python code,
+If you need to use becas functionality programmatically from Python code,
 take a look at the :doc:`becas.py`.
 
 
