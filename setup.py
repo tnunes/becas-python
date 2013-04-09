@@ -9,7 +9,7 @@ becas-python - becas API client for Python
 **becas** is a biomedical concept annotator available through an HTTP API.
 
 This package allows usage of the becas API from a command-line tool or
-programatically from Python modules.
+programmatically from Python modules.
 
 Install it with::
 

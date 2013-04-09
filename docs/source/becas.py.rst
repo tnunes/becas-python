@@ -3,7 +3,7 @@ becas.py module documentation
 
 This page contains the API documentation for **becas.py**, the single module
 packaged by **becas-python** that allows you to use the becas API
-programatically from your Python modules.
+programmatically from your Python modules.
 
 For instructions on how to use the becas API from a command-line tool, read
 the :doc:`cli` documentation.

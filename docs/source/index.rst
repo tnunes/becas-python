@@ -51,7 +51,7 @@ If you install manually, you should install `requests`_ on your own.
 Usage
 -----
 
-**becas-python** can be used programatically or through a command-line interface.
+**becas-python** can be used programmatically or through a command-line interface.
 
 
 Command-line interface
@@ -64,8 +64,8 @@ To use becas as a command-line tool check the :doc:`cli` documentation.
    cli
 
 
-Programatically
-^^^^^^^^^^^^^^^
+Programmatically
+^^^^^^^^^^^^^^^^
 
 Learn how to use becas from your Python programs in the :doc:`becas.py`:
 
