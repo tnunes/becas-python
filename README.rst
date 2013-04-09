@@ -14,6 +14,12 @@ publications. You can learn more about becas in its* `about page`_.
 This package allows usage of the becas API from a command-line tool or
 programatically from Python modules.
 
+Install it with::
+
+    $ pip install becas
+
+And learn to use it by reading the `documentation`_.
+
 
 Resources
 ---------
