@@ -47,7 +47,7 @@ __email__ = 'tiago.nunes@ua.pt'
 __all__ = ('email', 'tool', 'timeout', 'secure',
            'SEMANTIC_GROUPS', 'EXPORT_FORMATS',
            'annotate_text', 'export_text',
-           'annotate_publication', 'export_publication',
+           'annotate_publication', 'export_publication', 'main',
            'BecasException', 'AuthenticationRequired', 'InvalidGroups',
            'InvalidFormat', 'TooMuchText', 'TooManyRequests',
            'PublicationNotFound', 'ServiceUnavailable',
@@ -84,13 +84,13 @@ SEMANTIC_GROUPS = ('SPEC', 'ANAT', 'DISO', 'PATH', 'CHED', 'ENZY',
 #: Output formats available for the :func:`export_text` function
 EXPORT_FORMATS = ('json', 'xml', 'a1', 'conll',)
 
-ENDPOINTS_PREFIX = 'bioinformatics.ua.pt/becas/api/'
-TEXT_ANNOTATE_ENDPOINT = ENDPOINTS_PREFIX + 'text/annotate'
-TEXT_EXPORT_ENDPOINT = ENDPOINTS_PREFIX + 'text/export'
-PUBMED_ANNOTATE_ENDPOINT = ENDPOINTS_PREFIX + 'pubmed/annotate/'  # + PMID
-PUBMED_EXPORT_ENDPOINT = ENDPOINTS_PREFIX + 'pubmed/export/'  # + PMID
+_ENDPOINTS_PREFIX = 'bioinformatics.ua.pt/becas/api/'
+_TEXT_ANNOTATE_ENDPOINT = _ENDPOINTS_PREFIX + 'text/annotate'
+_TEXT_EXPORT_ENDPOINT = _ENDPOINTS_PREFIX + 'text/export'
+_PUBMED_ANNOTATE_ENDPOINT = _ENDPOINTS_PREFIX + 'pubmed/annotate/'  # + PMID
+_PUBMED_EXPORT_ENDPOINT = _ENDPOINTS_PREFIX + 'pubmed/export/'  # + PMID
 
-DEFAULT_HEADERS = {
+_DEFAULT_HEADERS = {
     'User-Agent': 'becas-python/%s %s' % (
         __version__, requests.utils.default_user_agent()),
     'Content-Type': 'application/json',
@@ -177,17 +177,17 @@ def annotate_text(text, groups=None, echo=False):
 
     '''
 
-    validate_text(text)
+    _validate_text(text)
     payload = {'text': text}
     if groups:
-        validate_groups(groups)
+        _validate_groups(groups)
         payload['groups'] = groups
     if echo:
         payload['echo'] = True
-    validate_authentication()
+    _validate_authentication()
 
-    endpoint = endpoint_url('annotate_text')
-    response = do_request(endpoint, payload)
+    endpoint = _endpoint_url('annotate_text')
+    response = _do_request(endpoint, payload)
 
     return response.json()
 
@@ -214,16 +214,16 @@ def export_text(text, format, groups=None):
 
     '''
 
-    validate_text(text)
-    validate_format(format)
+    _validate_text(text)
+    _validate_format(format)
     payload = {'text': text, 'format': format}
     if groups:
-        validate_groups(groups)
+        _validate_groups(groups)
         payload['groups'] = groups
-    validate_authentication()
+    _validate_authentication()
 
-    endpoint = endpoint_url('export_text')
-    response = do_request(endpoint, payload)
+    endpoint = _endpoint_url('export_text')
+    response = _do_request(endpoint, payload)
 
     return response.text
 
@@ -244,15 +244,15 @@ def annotate_publication(pmid, groups=None):
 
     '''
 
-    validate_pmid(pmid)
+    _validate_pmid(pmid)
     payload = {}
     if groups:
-        validate_groups(groups)
+        _validate_groups(groups)
         payload['groups'] = groups
-    validate_authentication()
+    _validate_authentication()
 
-    endpoint = endpoint_url('annotate_publication', pmid=pmid)
-    response = do_request(endpoint, payload)
+    endpoint = _endpoint_url('annotate_publication', pmid=pmid)
+    response = _do_request(endpoint, payload)
 
     return response.json()
 
@@ -274,37 +274,37 @@ def export_publication(pmid, groups=None):
 
     '''
 
-    validate_pmid(pmid)
+    _validate_pmid(pmid)
     payload = {}
     if groups:
-        validate_groups(groups)
+        _validate_groups(groups)
         payload['groups'] = groups
-    validate_authentication()
+    _validate_authentication()
 
-    endpoint = endpoint_url('export_publication', pmid=pmid)
-    response = do_request(endpoint, payload)
+    endpoint = _endpoint_url('export_publication', pmid=pmid)
+    response = _do_request(endpoint, payload)
 
     return response.text
 
 
 # -- Helpers ------------------------------------------------------------------
-def endpoint_url(endpoint, pmid=None):
+def _endpoint_url(endpoint, pmid=None):
     '''Return service URL for given endpoint.'''
 
     scheme = 'https://' if secure else 'http://'
     auth = '?tool=' + quote(tool) + '&email=' + quote(email)
     if endpoint == 'annotate_text':
-        return scheme + TEXT_ANNOTATE_ENDPOINT + auth
+        return scheme + _TEXT_ANNOTATE_ENDPOINT + auth
     if endpoint == 'export_text':
-        return scheme + TEXT_EXPORT_ENDPOINT + auth
+        return scheme + _TEXT_EXPORT_ENDPOINT + auth
     if endpoint == 'annotate_publication':
-        return scheme + PUBMED_ANNOTATE_ENDPOINT + str(pmid) + auth
+        return scheme + _PUBMED_ANNOTATE_ENDPOINT + str(pmid) + auth
     if endpoint == 'export_publication':
-        return scheme + PUBMED_EXPORT_ENDPOINT + str(pmid) + auth
+        return scheme + _PUBMED_EXPORT_ENDPOINT + str(pmid) + auth
     raise ValueError('Unknown endpoint "%s"' % endpoint)
 
 
-def validate_authentication():
+def _validate_authentication():
     '''Ensure the user has authenticated itself by providing an email
     address and tool name.'''
 
@@ -314,21 +314,21 @@ def validate_authentication():
         raise AuthenticationRequired('Please set your tool name')
 
 
-def validate_text(text):
+def _validate_text(text):
     '''Validate text to annotate.'''
 
     if not text or not text.strip():
         raise ValueError('Invalid ``text`` parameter')
 
 
-def validate_pmid(pmid):
+def _validate_pmid(pmid):
     '''Validate PMID to annotate'''
 
     if not pmid or not isinstance(pmid, int) or pmid <= 0:
         raise ValueError('Invalid ``pmid`` parameter')
 
 
-def validate_groups(groups):
+def _validate_groups(groups):
     '''Validate semantic groups.'''
 
     if not isinstance(groups, dict):
@@ -349,29 +349,29 @@ def validate_groups(groups):
                             ' At least one group must be true')
 
 
-def validate_format(format):
+def _validate_format(format):
     '''Validate export format.'''
 
     if format not in EXPORT_FORMATS:
         raise InvalidFormat('Unknown format ``%s``' % format)
 
 
-def do_request(endpoint, payload):
+def _do_request(endpoint, payload):
     '''Perform a POST request to one of the becas API endpoints.'''
 
     # Throttle requests to perform at most two per second
     delay = 0.5
     current = time.time()
-    wait = do_request.previous + delay - current
+    wait = _do_request._previous + delay - current
     if wait > 0:
         time.sleep(wait)
-        do_request.previous = current + wait
+        _do_request._previous = current + wait
     else:
-        do_request.previous = current
+        _do_request._previous = current
     try:
         res = requests.post(endpoint,
                             data=json.dumps(payload),
-                            headers=DEFAULT_HEADERS,
+                            headers=_DEFAULT_HEADERS,
                             timeout=timeout,
                             verify=False)  # SSL certificate validation fails
                                            # in systems without proper CAs
@@ -403,11 +403,11 @@ def do_request(endpoint, payload):
 
     return res
 
-do_request.previous = 0  # time of last request
+_do_request._previous = 0  # time of last request
 
 
 # -- Command line interface ---------------------------------------------------
-def argparser():
+def _argparser():
     '''Return ArgumentParser to parse command-line options.'''
 
     import argparse
@@ -421,15 +421,15 @@ def argparser():
         help='annotate text as JSON with concept metadata',
         description=('Annotate text with biomedical concepts using the '
                      'becas API.'))
-    text_annotate_parser.set_defaults(func=cli_annotate_text)
+    text_annotate_parser.set_defaults(func=_cli_annotate_text)
     text_export_parser = subparsers.add_parser(
         'export-text',
         help='export text in a chosen format',
         description=('Export text annotated with biomedical concepts in a '
                      ' chosen format using the becas API.'))
-    text_export_parser.set_defaults(func=cli_export_text)
+    text_export_parser.set_defaults(func=_cli_export_text)
     for text_parser in (text_annotate_parser, text_export_parser):
-        add_auth_options(text_parser)
+        _add_auth_options(text_parser)
         input_group = text_parser.add_argument_group('input selection')
         text_input = input_group.add_mutually_exclusive_group(required=True)
         text_input.add_argument('-f', '--file', type=argparse.FileType('rt'),
@@ -448,27 +448,27 @@ def argparser():
         help='annotate PubMed publication as JSON with concept metadata',
         description=('Annotate PubMed publications with biomedical concepts '
                      'using the becas API.'))
-    publication_annotate_parser.set_defaults(func=cli_annotate_publication)
+    publication_annotate_parser.set_defaults(func=_cli_annotate_publication)
     publication_export_parser = subparsers.add_parser(
         'export-publication',
         help='export PubMed publication in MEDLINE IeXML',
         description=('Export PubMed publications annotated with biomedical '
                      'concepts using the becas API.'))
-    publication_export_parser.set_defaults(func=cli_export_publication)
+    publication_export_parser.set_defaults(func=_cli_export_publication)
     for publication_parser in (
             publication_annotate_parser, publication_export_parser):
-        add_auth_options(publication_parser)
+        _add_auth_options(publication_parser)
         input_group = publication_parser.add_argument_group('input selection')
         input_group.add_argument('-p', '--pmid', type=int, required=True,
                                  dest='pmid', metavar='PMID',
                                  help='PMID of publication to annotate')
     for parser in (text_annotate_parser, text_export_parser,
                    publication_annotate_parser, publication_export_parser):
-        add_common_options(parser)
+        _add_common_options(parser)
     return ap
 
 
-def add_auth_options(parser):
+def _add_auth_options(parser):
     '''Add API authentication options to a ArgumentParser.'''
 
     auth_group = parser.add_argument_group('client authentication')
@@ -479,7 +479,7 @@ def add_auth_options(parser):
                                   '(default: %s)' % tool))
 
 
-def add_common_options(parser):
+def _add_common_options(parser):
     '''Add common API options to a ArgumentParser.'''
 
     import argparse
@@ -499,7 +499,7 @@ def add_common_options(parser):
                         help='seconds to wait before timing out a request')
 
 
-def setup_common_cli_args(args):
+def _setup_common_cli_args(args):
     '''Validate and set common command-line arguments.'''
 
     global email, tool, timeout, secure
@@ -513,38 +513,38 @@ def setup_common_cli_args(args):
         for group in args.groups.split(','):
             groups[group] = True
         try:
-            validate_groups(groups)
+            _validate_groups(groups)
         except InvalidGroups as e:
-            argparser().error(e)
+            _argparser().error(e)
     return groups
 
 
-def validate_cli_text(text, err_msg):
+def _validate_cli_text(text, err_msg):
     '''Validate text input from command-line.'''
 
     try:
-        validate_text(text)
+        _validate_text(text)
     except ValueError:
-        argparser().error(err_msg)
+        _argparser().error(err_msg)
 
 
-def get_cli_text(args):
+def _get_cli_text(args):
     '''Read text from the chosen input medium.'''
 
     if args.stdin:
         text = sys.stdin.read()
-        validate_cli_text(text, 'Got no text from STDIN')
+        _validate_cli_text(text, 'Got no text from STDIN')
     elif args.file:
         text = args.file.read()
-        validate_cli_text(text, '`%s` file is empty or non-textual'
+        _validate_cli_text(text, '`%s` file is empty or non-textual'
                                 % args.file.name)
     else:
         text = args.text
-        validate_cli_text(text, 'Got empty --text argument')
+        _validate_cli_text(text, 'Got empty --text argument')
     return text
 
 
-def handle_annotation_results(results, output_file):
+def _handle_annotation_results(results, output_file):
     '''Print annotation results to STDOUT or to a file.'''
 
     results = json.dumps(results) if isinstance(results, dict) else results
@@ -552,7 +552,7 @@ def handle_annotation_results(results, output_file):
         try:
             output_file.write(results.encode('utf-8'))
         except IOError as e:
-            abort('IOError writing to output file: %s' % e)
+            _abort('IOError writing to output file: %s' % e)
         finally:
             output_file.close()
     else:
@@ -560,68 +560,68 @@ def handle_annotation_results(results, output_file):
         sys.stdout.flush()
 
 
-def cli_annotate_text(args):
+def _cli_annotate_text(args):
     '''Annotate text from the command-line.'''
 
-    groups = setup_common_cli_args(args)
-    text = get_cli_text(args)
+    groups = _setup_common_cli_args(args)
+    text = _get_cli_text(args)
     try:
         results = annotate_text(text, groups)
     except ValueError as e:
-        argparser().error(e)
+        _argparser().error(e)
     except BecasException as e:
-        abort(e)
-    handle_annotation_results(results, args.output_file)
+        _abort(e)
+    _handle_annotation_results(results, args.output_file)
 
 
-def cli_export_text(args):
+def _cli_export_text(args):
     '''Export annotated text from the command-line.'''
 
-    groups = setup_common_cli_args(args)
-    text = get_cli_text(args)
+    groups = _setup_common_cli_args(args)
+    text = _get_cli_text(args)
     try:
         results = export_text(text, args.format, groups)
     except ValueError as e:
-        argparser().error(e)
+        _argparser().error(e)
     except BecasException as e:
-        abort(e)
-    handle_annotation_results(results, args.output_file)
+        _abort(e)
+    _handle_annotation_results(results, args.output_file)
 
 
-def cli_annotate_publication(args):
+def _cli_annotate_publication(args):
     '''Annotate PubMed publication from the command-line.'''
 
-    groups = setup_common_cli_args(args)
+    groups = _setup_common_cli_args(args)
     try:
         results = annotate_publication(args.pmid, groups)
     except ValueError as e:
-        argparser().error(e)
+        _argparser().error(e)
     except BecasException as e:
-        abort(e)
-    handle_annotation_results(results, args.output_file)
+        _abort(e)
+    _handle_annotation_results(results, args.output_file)
 
 
-def cli_export_publication(args):
+def _cli_export_publication(args):
     '''Export annotated PubMed publication from the command-line.'''
 
-    groups = setup_common_cli_args(args)
+    groups = _setup_common_cli_args(args)
     try:
         results = export_publication(args.pmid, groups)
     except ValueError as e:
-        argparser().error(e)
+        _argparser().error(e)
     except BecasException as e:
-        abort(e)
-    handle_annotation_results(results, args.output_file)
+        _abort(e)
+    _handle_annotation_results(results, args.output_file)
 
 
 def main():
     '''Command-line interface entry point.'''
 
-    args = argparser().parse_args()
+    args = _argparser().parse_args()
     args.func(args)
 
 
-def abort(msg, ret=1):
+def _abort(msg, ret=1):
     '''Print message to stderr and abort program execution.'''
 
     if isinstance(msg, Exception):
@@ -634,4 +634,4 @@ if __name__ == '__main__':
     try:
         main()
     except KeyboardInterrupt:
-        abort('Manually interrupted by ^C. Aborting.')
+        _abort('Manually interrupted by ^C. Aborting.')
