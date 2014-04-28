@@ -18,7 +18,7 @@ Install it with::
 And learn to use it by reading the `documentation`_.
 
 
-:copyright: (c) 2013, Tiago Nunes, Universidade de Aveiro
+:copyright: (c) 2014, Tiago Nunes, Universidade de Aveiro
 :license: Creative Commons Attribution-Noncommercial
 
 

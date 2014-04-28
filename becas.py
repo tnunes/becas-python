@@ -18,7 +18,7 @@ Install it with::
 And learn to use it by reading the `documentation`_.
 
 
-:copyright: (c) 2013, Tiago Nunes, Universidade de Aveiro
+:copyright: (c) 2014, Tiago Nunes, Universidade de Aveiro
 :license: Creative Commons Attribution-Noncommercial
 
 
@@ -37,7 +37,7 @@ __title__ = 'becas'
 __version__ = '1.0.4-dev'
 __author__ = 'Tiago Nunes'
 __license__ = 'CC-BY-NC'
-__copyright__ = 'Copyright 2013, Tiago Nunes, Universidade de Aveiro'
+__copyright__ = 'Copyright 2014, Tiago Nunes, Universidade de Aveiro'
 __url__ = 'http://tnunes.github.io/becas-python/'
 
 __maintainer__ = 'Tiago Nunes'
